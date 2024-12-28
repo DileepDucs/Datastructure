@@ -33,7 +33,7 @@ class LinkList<T>{
         var current = node
         var prev: Nod<T>?
         while current != nil {
-            var temp = current?.next
+            let temp = current?.next
             current?.next = prev
             prev = current
             current = temp
@@ -102,15 +102,7 @@ class LinkedList {
         var current2 = l2
         
         while current1 != nil || current2 != nil {
-            var value1 = 0
-            var value2 = 0
-            if let curr = current1 {
-                value1 = curr.data
-            }
-            if let curr = current2 {
-                value2 = curr.data
-            }
-            sum = carray + value1  + value2
+            sum = carray + (current1?.data ?? 0)  + (current2?.data ?? 0)
             carray = sum / 10
             let temp = Node(sum % 10)
             if (head == nil) {
