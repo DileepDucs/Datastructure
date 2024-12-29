@@ -11,7 +11,6 @@ struct Stack<T> {
     private var array: [T] = []
     
     mutating func push(_ element: T) {
-        
         array.append(element)
     }
     
@@ -21,8 +20,7 @@ struct Stack<T> {
     }
     
     func peek() -> T? {
-        guard let top = array.last else { return nil }
-        return top
+        return array.last
     }
      
     var isEmpty: Bool {

@@ -71,7 +71,7 @@ class LinkedList {
     func printNodeList(node: Node?) {
         var current = node
         while current != nil {
-            print(current?.data)
+            print(current?.data ?? "")
             current = current?.next
         }
     }
