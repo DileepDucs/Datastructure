@@ -121,6 +121,36 @@ class LinkedList {
         return head
     }
     
+    func sumOfTwo(l1: Node?, l2: Node?) -> Node? {
+        if l1 == nil {
+            return l2
+        }
+        if l2 == nil {
+            return l1
+        }
+        
+        var head: Node?
+        var current: Node?
+        var sum = 0
+        var carry = 0
+        var current1 = l1
+        var current2 = l2
+        
+        while current1 != nil || current2 != nil {
+            sum = carry + (current1?.data ?? 0) + (current2?.data ?? 0)
+            carry = sum / 10
+            let temp = Node(sum % 10)
+            if head == nil {
+                head = temp
+                current = temp
+            } else {
+                current?.next = temp
+                current = current?.next
+            }
+        }
+        return head
+    }
+    
     func isPalindrome(_ head: Node?) -> Bool {
         var stack = Stack<Node>()
         var current = head
@@ -151,6 +181,12 @@ class LinkedList {
         }
         return prev
     }
+    
+    /****
+     Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
+     Input: head = [1,1,2,3,3]
+     Output: [1,2,3]
+     */
     
     func deleteDuplicates(_ head: Node?) -> Node? {
         var temp = head
