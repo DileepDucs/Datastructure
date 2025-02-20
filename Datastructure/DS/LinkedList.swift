@@ -188,22 +188,28 @@ class LinkedList {
      Output: [1,2,3]
      */
     
-    func deleteDuplicates(_ head: Node?) -> Node? {
-        var temp = head
-        if temp == nil || temp?.next == nil {
-            return head
-        }
-        while temp != nil {
-            var p = temp?.next
-            if let value = temp?.data {
-                while value == p?.data {
-                    p = p?.next
-                }
+    // chat gpt solution //Given the head of a sorted linked list, delete all duplicates such that each element appears only once.
+    func deleteDuplicatesII(_ head: Node?) -> Node? {
+        var current = head
+        
+        while current != nil && current?.next != nil {
+            if current?.data == current?.next?.data {
+                current?.next = current?.next?.next  // Skip duplicate node
+            } else {
+                current = current?.next  // Move to next unique element
             }
-            temp?.next = p
-            temp = temp?.next
         }
+        
         return head
+    }
+    
+    // Recursive (O(N) Time, O(N) Space)
+    func deleteDuplicatesRecursive(_ head: Node?) -> Node? {
+        guard let current = head else { return nil }
+        
+        current.next = deleteDuplicatesRecursive(current.next)
+        
+        return (current.next?.data == current.data) ? current.next : current
     }
     
     func reverseList(_ head: Node?) -> Node? {

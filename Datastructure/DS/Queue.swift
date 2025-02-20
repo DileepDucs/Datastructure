@@ -26,4 +26,8 @@ struct Queue<T> {
     var isEmpty: Bool {
         return array.isEmpty
     }
+    
+    var count: Int {
+        return array.count
+    }
 }

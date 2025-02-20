@@ -15,8 +15,12 @@
 		F041D8D32C2F08640084F91A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F041D8D12C2F08640084F91A /* Main.storyboard */; };
 		F041D8D52C2F08670084F91A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F041D8D42C2F08670084F91A /* Assets.xcassets */; };
 		F041D8D82C2F08670084F91A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F041D8D62C2F08670084F91A /* LaunchScreen.storyboard */; };
+		F06FD8B52D505B7A003FF5DF /* DoublyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06FD8B42D505B7A003FF5DF /* DoublyLinkedList.swift */; };
+		F07E07FA2D66C02A0070B8A4 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07E07F92D66C0220070B8A4 /* Graph.swift */; };
 		F0C3406C2D2155350031CAD2 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C3406B2D2155350031CAD2 /* Queue.swift */; };
 		F0C3406E2D2315AB0031CAD2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C3406D2D2315AB0031CAD2 /* Array.swift */; };
+		F0D829532D58A61900BBC530 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D829522D58A61900BBC530 /* Tree.swift */; };
+		F0D829552D5B253300BBC530 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D829542D5B252700BBC530 /* Number.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +34,12 @@
 		F041D8D42C2F08670084F91A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F041D8D72C2F08670084F91A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F041D8D92C2F08670084F91A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F06FD8B42D505B7A003FF5DF /* DoublyLinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoublyLinkedList.swift; sourceTree = "<group>"; };
+		F07E07F92D66C0220070B8A4 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		F0C3406B2D2155350031CAD2 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		F0C3406D2D2315AB0031CAD2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		F0D829522D58A61900BBC530 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
+		F0D829542D5B252700BBC530 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,10 +56,14 @@
 		F018F7B72C2FD18700F546CE /* DS */ = {
 			isa = PBXGroup;
 			children = (
+				F0D829542D5B252700BBC530 /* Number.swift */,
 				F0C3406B2D2155350031CAD2 /* Queue.swift */,
 				F018F7B92C2FD1E900F546CE /* Stack.swift */,
 				F018F7B52C2FD17600F546CE /* LinkedList.swift */,
+				F06FD8B42D505B7A003FF5DF /* DoublyLinkedList.swift */,
 				F0C3406D2D2315AB0031CAD2 /* Array.swift */,
+				F0D829522D58A61900BBC530 /* Tree.swift */,
+				F07E07F92D66C0220070B8A4 /* Graph.swift */,
 			);
 			path = DS;
 			sourceTree = "<group>";
@@ -166,10 +178,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0D829552D5B253300BBC530 /* Number.swift in Sources */,
 				F041D8D02C2F08640084F91A /* ViewController.swift in Sources */,
 				F0C3406C2D2155350031CAD2 /* Queue.swift in Sources */,
 				F0C3406E2D2315AB0031CAD2 /* Array.swift in Sources */,
+				F0D829532D58A61900BBC530 /* Tree.swift in Sources */,
+				F06FD8B52D505B7A003FF5DF /* DoublyLinkedList.swift in Sources */,
 				F018F7BA2C2FD1E900F546CE /* Stack.swift in Sources */,
+				F07E07FA2D66C02A0070B8A4 /* Graph.swift in Sources */,
 				F041D8CC2C2F08640084F91A /* AppDelegate.swift in Sources */,
 				F018F7B62C2FD17600F546CE /* LinkedList.swift in Sources */,
 				F041D8CE2C2F08640084F91A /* SceneDelegate.swift in Sources */,
