@@ -11,19 +11,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        exicuteArray()
+        let tree = Tree()
+        //tree.isBinaryTreeBalancedOptimised(<#T##root: Tree.Node?##Tree.Node?#>)
     }
     
-    func exicuteArray() {
-        let array = ArrayDS()
-        //let value = array.subarraySum([1, 1, 1], 2)
-        //let value = array.maximumSubarraySum([8,5,20,2,9], 1)
-        //print(value)
-        print(array.binaryGap(9))
-        
-    }
-
-
 }
 

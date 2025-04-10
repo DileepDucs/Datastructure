@@ -10,6 +10,37 @@ import Foundation
 class ArrayDS {
     
     /**
+     Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the i
+     ntervals in the input.
+     Example 1:
+     Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+     Output: [[1,6],[8,10],[15,18]]
+     Explanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].
+     
+     Example 2:
+     Input: intervals = [[1,4],[4,5]]
+     Output: [[1,5]]
+     Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+     https://leetcode.com/problems/merge-intervals/submissions/1554057123/
+     */
+    func merge(_ intervals: [[Int]]) -> [[Int]] {
+        guard intervals.count > 1 else { return intervals}
+        let sortedIntervales = intervals.sorted { $0[1] < $1[0] }
+        
+        // Step 2: Merge intervals
+        var resultArray = [[Int]]()
+        
+        for value in sortedIntervales {
+            if resultArray.isEmpty || resultArray.last![1] < value[0] {
+                resultArray.append(value)
+            } else {
+                resultArray[resultArray.count - 1][1] = Swift.max(resultArray.last![1], value[1])
+            }
+        }
+        return resultArray
+    }
+    
+    /**
      Binary Gap
      * Problem: Given a positive integer N, find the longest sequence of consecutive zeros that is surrounded by ones in the binary representation of N.
      * Example:
