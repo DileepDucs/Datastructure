@@ -24,6 +24,7 @@ class Tree {
     
     //MARK: Recurcive
     //Recursive Inorder Traversal (DFS)
+    //🟢
     func inorderTraversal(root: Node?) {
         guard let root = root else { return }
         inorderTraversal(root: root.left)
@@ -31,6 +32,7 @@ class Tree {
         inorderTraversal(root: root.right)
     }
     
+    //🟢
     func preorderTraversal(root: Node?) {
         guard let root = root else { return }
         print("\(root.data)")
@@ -38,6 +40,7 @@ class Tree {
         preorderTraversal(root: root.right)
     }
     
+    //🟢
     func postOrderTraversal(root: Node?) {
         guard let root = root else { return }
         postOrderTraversal(root: root.left)
@@ -50,6 +53,7 @@ class Tree {
     //10. How do you print all nodes of a given binary tree using inorder traversal without recursion?
     //Inorder Tree Traversal using Stack in Swift
     //Iterative Inorder Traversal (Using Stack) (DFS Traversal)
+    //🟠
     func inorderTreeTraversalIterative(root: Node?) {
         var stack = Stack<Node>()
         var current = root
@@ -68,6 +72,7 @@ class Tree {
     //Morris Inorder Traversal (O(1) Space, No Stack)
     //Inorder Tree Traversal without recursion and without stack in Swift. ( Morris Traversal )
     //https://leetcode.com/problems/binary-tree-inorder-traversal/submissions/1537761821/
+    //🔴
     func morisTraversal(root: Node?) {
         var current = root
         var pre: Node? = nil
@@ -94,6 +99,7 @@ class Tree {
     
     
     //9. How do you traverse a given binary tree in preorder without recursion?
+    //🟠
     func preorderTreeTraverselIterative(root: Node?) {
         guard let root = root else { return }
         var stack = Stack<Node>()
@@ -111,6 +117,7 @@ class Tree {
         
     }
     
+    //🟢
     func isMirrorTree(root1: Node?, root2: Node?) -> Bool {
         if root1 == nil && root2 == nil {
             return true
@@ -124,6 +131,7 @@ class Tree {
     //Height of a Binary Tree
     //The height of a binary tree is the number of edges on the longest path from the root to a leaf.
     
+    //🟢
     private func height(_ root: Node?) -> Int {
         guard let root = root else { return 0 } // Return -1 if considering edges, 0 if considering nodes
         return 1 + max(height(root.left), height(root.right))
@@ -135,6 +143,7 @@ class Tree {
     https://leetcode.com/problems/diameter-of-binary-tree/description/
     The diameter (or width) of a binary tree is the length of the longest path between any two nodes in the tree. It may or may not pass through the root.*/
     
+    //🟢
     func diameter(root: Node?) -> Int {
         guard let root = root else { return 0 }
         let lHeight = height(root.left)
@@ -144,8 +153,11 @@ class Tree {
         return max(lHeight + rHeight, max(leftDiameter, rightDiameter))
     }
     
-    // Validate Binary Search Tree (LeetCode 98)
+    
+    //Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+    /* Given two binary trees, the task is to find if both of them are identical or not. Two trees are identical when they have the same data and the arrangement of data is also the same.*/
     //https://leetcode.com/problems/same-tree/
+    //🟢
     func isSameTree(_ p: Node?, _ q: Node?) -> Bool {
         // If both trees are nil, they are the same
         if p == nil && q == nil {
@@ -157,10 +169,91 @@ class Tree {
         return isSameTree(p!.left, q!.left) && isSameTree(p!.right, q!.right)
     }
     
+    /*
+     Time Complexity: O(n), where n is the number of nodes in the larger of the two trees, as each node is visited once.
+     Auxiliary Space: O(h), where h is the height of the trees, due to the recursive call stack.*/
+    
+    //Using Morris Traversal – O(n) Time and O(1) Space
+    //https://www.geeksforgeeks.org/write-c-code-to-determine-if-two-trees-are-identical/?ref=header_ind
+    /*
+     The idea is to use Morris traversal for comparing two trees, traverse both trees simultaneously by starting at their roots. For each node, if the left subtree exists, find the rightmost node in the left subtree (the predecessor) and create a temporary link back to the current node. Then, move to the left subtree. If no left subtree exists, compare the current nodes of both trees and move to the right subtree. At each step, compare the values of the corresponding nodes and ensure the structure matches. If at any point the values or structure differ, the trees are not identical. The process continues until both trees are fully traversed, and any temporary links created are removed. If no mismatches are found, the trees are identical.
+     */
+    func isSameTree_BFS(_ p: Node?, _ q: Node?) -> Bool {
+        // TODO: little complicated
+        return true
+    }
+    
+    /**
+     isSymmetric(_:) function in Swift to check whether a binary tree is symmetric around its center — i.e., a mirror image of itself.
+     */
+    //🟢
+    func isSymmetric(_ root: Node?) -> Bool {
+        return isMirror(root?.left, root?.right)
+    }
+    
+    private func isMirror(_ t1: Node?, _ t2: Node?) -> Bool {
+        if t1 == nil && t2 == nil {
+            return true
+        }
+        if t1 == nil || t2 == nil {
+            return false
+        }
+        
+        return t1!.data == t2!.data &&
+        isMirror(t1!.left, t2!.right) &&
+        isMirror(t1!.right, t2!.left)
+    }
+    
+    /*Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.*/
+    //https://leetcode.com/problems/path-sum/submissions/1604264946/
+    //🟠
+    func hasPathSum(_ root: Node?, _ targetSum: Int) -> Bool {
+        guard let root = root else { return false }
+        
+        // If it's a leaf node
+        if root.left == nil && root.right == nil {
+            return root.data == targetSum
+        }
+        
+        let remainingSum = targetSum - root.data
+        
+        return hasPathSum(root.left, remainingSum) || hasPathSum(root.right, remainingSum)
+    }
+    
+    //Here's the iterative version of hasPathSum(_:_:) using Breadth-First Search (BFS) with a queue
+    //https://www.youtube.com/watch?v=LSKQyOz_P8I
+    //🔴
+    func hasPathSum_BFS(_ root: Node?, _ targetSum: Int) -> Bool {
+        guard let root = root else { return false }
+        
+        var queue = Queue<(Node, Int)>()
+        queue.enqueue((root, root.data))
+        
+        while !queue.isEmpty {
+            guard let (node, sum) = queue.dequeue() else { continue }
+            
+            // If it's a leaf node
+            if node.left == nil && node.right == nil {
+                if sum == targetSum {
+                    return true
+                }
+            }
+            
+            if let left = node.left {
+                queue.enqueue((left, sum + left.data))
+            }
+            if let right = node.right {
+                queue.enqueue((right, sum + right.data))
+            }
+        }
+        
+        return false
+    }
+    
     //Problem: Given a binary tree, determine if it is a valid Binary Search Tree (BST).
     //https://leetcode.com/problems/validate-binary-search-tree/submissions/1602711390/
     //https://www.youtube.com/watch?v=s6ATEkipzow
-    
+    //🟢
     func isValidBST(_ root: Node?) -> Bool {
         return validate(root, min: nil, max: nil)
     }
@@ -189,6 +282,7 @@ class Tree {
     
     private var prev: Node?
     
+    //🔴
     func isValidBST_Efficient(_ root: Node?) -> Bool {
         return inorder(root)
     }
@@ -217,6 +311,7 @@ class Tree {
     /**
      A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
      */
+    //🟢
     func maxDepth(_ root: Node?) -> Int {
         guard let root = root else { return 0 }
         return 1 + max(maxDepth(root.left), maxDepth(root.right))
@@ -227,6 +322,7 @@ class Tree {
 
      Here’s how you can do that in Swift, using a queue (level-order traversal / BFS):
      */
+    //🟠
     func maxDepth_BFS_Approach(_ root: Node?) -> Int {
         guard let root = root else { return 0 }
         var queue = Queue<Node>()
@@ -253,6 +349,7 @@ class Tree {
      Input: root = [3,9,20,null,null,15,7]
      Output: [[3],[9,20],[15,7]]
      */
+    // 🟢
     func levelOrder(_ root: Node?) -> [[Int]] {
         guard let root = root else { return [] }
         
@@ -264,7 +361,7 @@ class Tree {
             var levelValues = [Int]()
             let levelSize = queue.count
             
-            for i in 0..<levelSize {
+            for _ in 0..<levelSize {
                 let node = queue.dequeue()
                 levelValues.append(node?.data ?? 0)
                 if let left = node?.left {
@@ -278,6 +375,26 @@ class Tree {
         }
         return result
     }
+    
+    //Zigzag Level Order Traversal
+    // 🟢 This will be same implementation as above levelOrder traversal
+    // Need to keep one boolian flag to reverse the array and append in result solution is avaliable in leetcode
+    //https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
+    //Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+    /* Help: The Zigzag Level Order Traversal of a binary tree is like a normal level order (BFS),
+    but alternates direction at each level
+    Swift Implementation using BFS and a Queue
+    */
+    
+    //Binary Tree Right Side View
+    //🟢 This will be same implementation as above levelOrder traversal
+    //need to store right element of temp aaary into result array
+    //Solution is here https://leetcode.com/problems/binary-tree-right-side-view/
+    
+    
+    
+    //Binary Tree Left Side View
+    // 🟢 We can do the same for the left
     
     /*Lowest Common Ancestor (LCA) of Two Nodes
     1. In Binary search Tree
@@ -308,7 +425,7 @@ class Tree {
       If both p and q are greater than the current node, the LCA lies in the right subtree.
       If p and q are on opposite sides or one of them is the current node, the current node is the LCA.
       Recursive Solution (O(log N) for Balanced BST, O(N) for Skewed Tree) ***/
-    
+    //🔴
      func lowestCommonAncestorInBST(_ root: Node?, _ p: Node?, _ q: Node?) -> Node? {
          guard let root = root else { return nil }
          if let p = p, let q = q {
@@ -330,6 +447,7 @@ class Tree {
      Time Complexity: O(N)
      ✅ Space Complexity: O(H) (Recursive Stack) */
      
+    //🔴
     func lowestCommonAncestor(_ root: Node?, _ p: Node?, _ q: Node?) -> Node? {
         guard let root = root else { return nil }
         if root.data == p?.data || root.data == q?.data { return root }
@@ -389,4 +507,65 @@ class Tree {
         var queue = Queue<Node>()
         
     }
+    
+    //how to construct a binary tree from
+    //Construct Binary Tree from Inorder and Preorder/Postorder Traversals
+    
+    //1. Preorder + Inorder Traversal
+    /*
+     🧠 Idea:
+     Preorder gives you the root node first.
+     Inorder helps you split the left and right subtrees.
+     */
+    //https://www.youtube.com/watch?v=PbPS460rbMo
+    //🔴
+    func buildTree(_ preorder: [Int], _ inorder: [Int]) -> Node? {
+        var preorderIndex = 0
+        let inorderIndexMap = Dictionary(uniqueKeysWithValues: inorder.enumerated().map { ($1, $0) })
+        /*
+         [9: 0, 3: 1, 15: 2, 20: 3, 7: 4]
+         */
+        
+        func helper(_ left: Int, _ right: Int) -> Node? {
+            if left > right { return nil }
+            
+            let rootVal = preorder[preorderIndex]
+            preorderIndex += 1
+            
+            let root = Node(rootVal)
+            
+            let inorderIndex = inorderIndexMap[rootVal]! // Position of root in inorder
+            
+            root.left = helper(left, inorderIndex - 1)
+            root.right = helper(inorderIndex + 1, right)
+            
+            return root
+        }
+        
+        return helper(0, inorder.count - 1)
+    }
+    /**
+    1->
+     .map { ($1, $0) }
+     Flips the tuple to (value, index)
+     Result:
+     [(9, 0), (3, 1), (15, 2), (20, 3), (7, 4)]
+     
+    2->
+     Dictionary(uniqueKeysWithValues: ...)
+     Converts the array of tuples into a dictionary:
+     [
+       9: 0,
+       3: 1,
+       15: 2,
+       20: 3,
+       7: 4
+     ]
+     */
+    
+    
+    
+    
+    //Validate Binary Search Tree (BST)
+    
 }

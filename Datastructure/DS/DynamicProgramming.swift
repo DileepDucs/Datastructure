@@ -6,7 +6,23 @@
 //
 import Foundation
 
+/*
+ 🧠 What is Dynamic Programming?
+ Dynamic Programming (DP) is a method for solving complex problems by breaking them down into simpler subproblems. It solves each subproblem once and stores the result to avoid redundant work. It’s ideal when a problem has:
 
+ Optimal Substructure: A problem can be broken down into subproblems which can be solved optimally.
+ Overlapping Subproblems: The same subproblems recur multiple times.
+ 
+ 🧩 Approaches to Dynamic Programming
+ //MARK: Memoization (Top-Down)
+ Recursive + caching results
+ Easy to write but can be slower due to stack overhead
+ Tabulation (Bottom-Up)
+ Iterative + fills DP table
+ Often faster and avoids recursion
+ Space Optimization
+ When only the last few states are needed, reduce space from O(n) to O(1) or O(2)
+ */
 class DynamicProgramming {
     
     // Longest Common Subsequence
@@ -80,6 +96,37 @@ class DynamicProgramming {
             }
         }
         return String(lcs.reversed())
+    }
+    
+    // same as above but here array of integer
+    //Longest common subarray in the given two arrays
+    //We use Dynamic Programming (DP) to efficiently solve the problem.
+    //https://leetcode.com/problems/maximum-length-of-repeated-subarray/description/
+    //https://www.youtube.com/watch?v=m4AOIKV3b9Y
+    func findLengthOptimum(_ nums1: [Int], _ nums2: [Int]) -> Int {
+        let n = nums1.count
+        let m = nums2.count
+        var result = Array(repeating: Array(repeating: 0, count: m + 1), count: n + 1)
+        var max = 0
+        for i in 1...n {
+            for j in 1...m {
+                if nums1[i - 1] == nums2[j - 1] {
+                    result[i][j] = 1 + result[i - 1][j - 1]
+                }
+            }
+        }
+        
+        for i in 0...n {
+            var string = ""
+            for j in 0...m {
+                string = string + " " + "\(result[i][j])"
+                if result[i][j] > max {
+                    max = result[i][j]
+                }
+            }
+            print(string)
+        }
+        return max
     }
     
 }
