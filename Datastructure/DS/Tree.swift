@@ -563,9 +563,108 @@ class Tree {
      ]
      */
     
+    //Kth Smallest Element in a BST
+    //(Find the K-th smallest number)
+    //https://leetcode.com/problems/kth-smallest-element-in-a-bst/submissions/1625061199/
+    //https://www.youtube.com/watch?v=5LUXSvjmGCw
+    //🔴
+    func kthSmallest(_ root: Node?, _ k: Int) -> Int {
+        var stack = Stack<Node>()
+        var current = root
+        var count = 0
+        
+        while current != nil || !stack.isEmpty {
+            // Go left as far as possible
+            while let node = current {
+                stack.push(node)
+                current = node.left
+            }
+            
+            // Visit node
+            let node = stack.pop()
+            count += 1
+            if count == k {
+                return node?.data ?? -1
+            }
+            
+            // Go right
+            current = node?.right
+        }
+        
+        // If k is invalid
+        return -1
+    }
     
+    //Recover Binary Search Tree
+    /*You're given the root of a Binary Search Tree (BST) where two nodes were swapped by mistake.
+     You must recover the tree without changing its structure.*/
+    //https://www.youtube.com/watch?v=2uPKWpMHmZA
+    //https://leetcode.com/problems/recover-binary-search-tree/description/
+    //🔴
+    var first: Node?
+    var second: Node?
+    var prevNode = Node(Int.min)
+    func recoverTree(_ root: Node?) {
+        inorderTraversalToRecoverTree(root)
+        var temp = first?.data
+        first?.data = (second?.data)!
+        second?.data = temp!
+    }
     
+    func inorderTraversalToRecoverTree(_ root: Node?) {
+        guard let root = root else { return }
+        inorderTraversalToRecoverTree(root.left)
+        // print
+        if first == nil && prevNode.data > root.data {
+            first = prevNode
+        }
+        
+        if first != nil && prevNode.data > root.data {
+            second = root
+        }
+        prev = root
+        inorderTraversalToRecoverTree(root.right)
+    }
     
-    //Validate Binary Search Tree (BST)
+    //Serialize and Deserialize Binary Tree
+    /**
+     You need to write two functions:
+
+     serialize(root: TreeNode?) -> String
+     Convert the binary tree into a string format.
+     deserialize(data: String) -> TreeNode?
+     Convert the string back into the original binary tree.
+     https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
+     */
+    //🔴
+    func serialize(_ root: Node?) -> String {
+        var result = [String]()
+        func dfs(_ root: Node?) {
+            guard let root = root else {
+                result.append("null")
+                return
+            }
+            result.append(String(root.data))
+            dfs(root.left)
+            dfs(root.right)
+        }
+        dfs(root)
+        return result.joined(separator: ",")
+    }
     
+    func deserialize(_ data: String) -> Node? {
+        let nodes = data.split(separator: ",").map { String($0)}
+        var index = 0
+        func dfs() -> Node? {
+            if index > nodes.count { return nil}
+            let value = nodes[index]
+            index = index + 1
+            if value == "null" { return nil }
+            let node = Node(Int(value)!)
+            node.left = dfs()
+            node.right = dfs()
+            return node
+        }
+        return dfs()
+    }
 }
