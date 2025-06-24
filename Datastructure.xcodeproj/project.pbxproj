@@ -18,8 +18,13 @@
 		F06FD8B52D505B7A003FF5DF /* DoublyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06FD8B42D505B7A003FF5DF /* DoublyLinkedList.swift */; };
 		F07E07FA2D66C02A0070B8A4 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07E07F92D66C0220070B8A4 /* Graph.swift */; };
 		F08C03152D6DA0C800869B8C /* DynamicProgramming.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08C03142D6DA0BA00869B8C /* DynamicProgramming.swift */; };
+		F0A55D5A2E07D7730015049B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A55D592E07D7690015049B /* String.swift */; };
+		F0A55D5C2E07EB110015049B /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A55D5B2E07EB0F0015049B /* Trie.swift */; };
+		F0B503E92DFDD2B300FE6608 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B503E82DFDD2AD00FE6608 /* APIService.swift */; };
 		F0C3406C2D2155350031CAD2 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C3406B2D2155350031CAD2 /* Queue.swift */; };
-		F0C3406E2D2315AB0031CAD2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C3406D2D2315AB0031CAD2 /* Array.swift */; };
+		F0C3406E2D2315AB0031CAD2 /* ArrayDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C3406D2D2315AB0031CAD2 /* ArrayDS.swift */; };
+		F0C8528A2DE382B1005EB28D /* MinStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C852892DE382AE005EB28D /* MinStack.swift */; };
+		F0C8528C2DE38B3F005EB28D /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C8528B2DE38B38005EB28D /* LRUCache.swift */; };
 		F0D829532D58A61900BBC530 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D829522D58A61900BBC530 /* Tree.swift */; };
 		F0D829552D5B253300BBC530 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D829542D5B252700BBC530 /* Number.swift */; };
 /* End PBXBuildFile section */
@@ -38,8 +43,13 @@
 		F06FD8B42D505B7A003FF5DF /* DoublyLinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoublyLinkedList.swift; sourceTree = "<group>"; };
 		F07E07F92D66C0220070B8A4 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		F08C03142D6DA0BA00869B8C /* DynamicProgramming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicProgramming.swift; sourceTree = "<group>"; };
+		F0A55D592E07D7690015049B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		F0A55D5B2E07EB0F0015049B /* Trie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
+		F0B503E82DFDD2AD00FE6608 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		F0C3406B2D2155350031CAD2 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
-		F0C3406D2D2315AB0031CAD2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		F0C3406D2D2315AB0031CAD2 /* ArrayDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayDS.swift; sourceTree = "<group>"; };
+		F0C852892DE382AE005EB28D /* MinStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinStack.swift; sourceTree = "<group>"; };
+		F0C8528B2DE38B38005EB28D /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
 		F0D829522D58A61900BBC530 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		F0D829542D5B252700BBC530 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,13 +68,17 @@
 		F018F7B72C2FD18700F546CE /* DS */ = {
 			isa = PBXGroup;
 			children = (
+				F0A55D5B2E07EB0F0015049B /* Trie.swift */,
+				F0A55D592E07D7690015049B /* String.swift */,
+				F0C8528B2DE38B38005EB28D /* LRUCache.swift */,
 				F08C03142D6DA0BA00869B8C /* DynamicProgramming.swift */,
 				F0D829542D5B252700BBC530 /* Number.swift */,
 				F0C3406B2D2155350031CAD2 /* Queue.swift */,
 				F018F7B92C2FD1E900F546CE /* Stack.swift */,
+				F0C852892DE382AE005EB28D /* MinStack.swift */,
 				F018F7B52C2FD17600F546CE /* LinkedList.swift */,
 				F06FD8B42D505B7A003FF5DF /* DoublyLinkedList.swift */,
-				F0C3406D2D2315AB0031CAD2 /* Array.swift */,
+				F0C3406D2D2315AB0031CAD2 /* ArrayDS.swift */,
 				F0D829522D58A61900BBC530 /* Tree.swift */,
 				F07E07F92D66C0220070B8A4 /* Graph.swift */,
 			);
@@ -102,12 +116,21 @@
 		F041D8CA2C2F08640084F91A /* Datastructure */ = {
 			isa = PBXGroup;
 			children = (
+				F0B503E72DFDD29E00FE6608 /* Networking */,
 				F041D8CF2C2F08640084F91A /* ViewController.swift */,
 				F018F7B82C2FD19C00F546CE /* Comon */,
 				F018F7B72C2FD18700F546CE /* DS */,
 				F041D8D92C2F08670084F91A /* Info.plist */,
 			);
 			path = Datastructure;
+			sourceTree = "<group>";
+		};
+		F0B503E72DFDD29E00FE6608 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				F0B503E82DFDD2AD00FE6608 /* APIService.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,9 +205,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0D829552D5B253300BBC530 /* Number.swift in Sources */,
+				F0B503E92DFDD2B300FE6608 /* APIService.swift in Sources */,
 				F041D8D02C2F08640084F91A /* ViewController.swift in Sources */,
 				F0C3406C2D2155350031CAD2 /* Queue.swift in Sources */,
-				F0C3406E2D2315AB0031CAD2 /* Array.swift in Sources */,
+				F0C3406E2D2315AB0031CAD2 /* ArrayDS.swift in Sources */,
+				F0C8528C2DE38B3F005EB28D /* LRUCache.swift in Sources */,
 				F0D829532D58A61900BBC530 /* Tree.swift in Sources */,
 				F08C03152D6DA0C800869B8C /* DynamicProgramming.swift in Sources */,
 				F06FD8B52D505B7A003FF5DF /* DoublyLinkedList.swift in Sources */,
@@ -192,6 +217,9 @@
 				F07E07FA2D66C02A0070B8A4 /* Graph.swift in Sources */,
 				F041D8CC2C2F08640084F91A /* AppDelegate.swift in Sources */,
 				F018F7B62C2FD17600F546CE /* LinkedList.swift in Sources */,
+				F0A55D5C2E07EB110015049B /* Trie.swift in Sources */,
+				F0C8528A2DE382B1005EB28D /* MinStack.swift in Sources */,
+				F0A55D5A2E07D7730015049B /* String.swift in Sources */,
 				F041D8CE2C2F08640084F91A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

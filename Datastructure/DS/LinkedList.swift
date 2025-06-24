@@ -335,20 +335,18 @@ class LinkedList {
             2.there is only one node and node next is pointing to self while loop will be handle this case.
      */
     
-    func detectLoop() -> Node? {
-        var first = head
-        var second = head
-        if first == nil || first?.next == nil {
-            return nil
-        }
-        while second != nil && second?.next != nil {
-            first = first?.next
-            second = second?.next?.next
-            if first === second {
-                return first
+    
+    func hasCycle(_ head: Node?) -> Bool {
+        var current = head
+        var currNext = head
+        while current != nil && current?.next != nil && currNext != nil && currNext?.next != nil {
+            current = current?.next
+            currNext = currNext?.next?.next
+            if current === currNext {
+                return true
             }
         }
-        return nil
+        return false
     }
     
     // How will you remove a cycle from a linked list?

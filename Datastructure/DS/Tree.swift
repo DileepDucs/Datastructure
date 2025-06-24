@@ -24,6 +24,7 @@ class Tree {
     
     //MARK: Recurcive
     //Recursive Inorder Traversal (DFS)
+    //https://www.youtube.com/watch?v=4_UDUj1j1KQ&t=5s // recursion traversal
     //🟢
     func inorderTraversal(root: Node?) {
         guard let root = root else { return }
@@ -53,7 +54,7 @@ class Tree {
     //10. How do you print all nodes of a given binary tree using inorder traversal without recursion?
     //Inorder Tree Traversal using Stack in Swift
     //Iterative Inorder Traversal (Using Stack) (DFS Traversal)
-    //🟠
+    //🔴
     func inorderTreeTraversalIterative(root: Node?) {
         var stack = Stack<Node>()
         var current = root
@@ -67,6 +68,25 @@ class Tree {
             print(currentNode.data)
             current = currentNode.right
         }
+    }
+    
+    //9. How do you traverse a given binary tree in preorder without recursion?
+    //🔴
+    func preorderTreeTraverselIterative(root: Node?) {
+        guard let root = root else { return }
+        var stack = Stack<Node>()
+        stack.push(root)
+        while !stack.isEmpty {
+            let node = stack.pop()
+            print(node?.data ?? "")
+            if let right = node?.right {
+                stack.push(right)
+            }
+            if let left = node?.left {
+                stack.push(left)
+            }
+        }
+        
     }
     
     //Morris Inorder Traversal (O(1) Space, No Stack)
@@ -97,26 +117,6 @@ class Tree {
         }
     }
     
-    
-    //9. How do you traverse a given binary tree in preorder without recursion?
-    //🟠
-    func preorderTreeTraverselIterative(root: Node?) {
-        guard let root = root else { return }
-        var stack = Stack<Node>()
-        stack.push(root)
-        while !stack.isEmpty {
-            let node = stack.pop()
-            print(node?.data ?? "")
-            if let right = node?.right {
-                stack.push(right)
-            }
-            if let left = node?.left {
-                stack.push(left)
-            }
-        }
-        
-    }
-    
     //🟢
     func isMirrorTree(root1: Node?, root2: Node?) -> Bool {
         if root1 == nil && root2 == nil {
@@ -131,7 +131,7 @@ class Tree {
     //Height of a Binary Tree
     //The height of a binary tree is the number of edges on the longest path from the root to a leaf.
     
-    //🟢
+    //🟢 🔴 Note: Return -1 if considering edges, 0 if considering nodes
     private func height(_ root: Node?) -> Int {
         guard let root = root else { return 0 } // Return -1 if considering edges, 0 if considering nodes
         return 1 + max(height(root.left), height(root.right))
@@ -139,7 +139,7 @@ class Tree {
     
     
     
-    /*2. Diameter of a Binary Tree
+    /*2. c
     https://leetcode.com/problems/diameter-of-binary-tree/description/
     The diameter (or width) of a binary tree is the length of the longest path between any two nodes in the tree. It may or may not pass through the root.*/
     
@@ -151,6 +151,42 @@ class Tree {
         let leftDiameter = diameter(root: root.left)
         let rightDiameter = diameter(root: root.right)
         return max(lHeight + rHeight, max(leftDiameter, rightDiameter))
+    }
+    
+    /*
+     2nd Approach: Diameter of a Binary Tree
+     
+     Step 1: Use DFS to Calculate Depths
+     We define a helper function depth(_:) that:
+
+     Recursively calculates the left depth and right depth.
+     Updates the diameter at each node by checking:
+     
+     diameter = max(diameter, leftDepth + rightDepth)
+     (This represents the longest path through that node.)
+     
+     Returns the depth of the current node, which is:
+     max(leftDepth, rightDepth) + 1
+     */
+    private var maxDiameter = 0
+    
+    func diameterOfBinaryTree(_ root: Node?) -> Int {
+        _ = depth(root)
+        return maxDiameter
+    }
+    
+    // Helper function to calculate depth
+    private func depth(_ node: Node?) -> Int {
+        guard let node = node else { return 0 }
+        
+        let leftDepth = depth(node.left)
+        let rightDepth = depth(node.right)
+        
+        // Update the diameter if the path through this node is longer
+        maxDiameter = max(maxDiameter, leftDepth + rightDepth)
+        
+        // Return the depth of the tree rooted at this node
+        return max(leftDepth, rightDepth) + 1
     }
     
     
@@ -188,21 +224,9 @@ class Tree {
      */
     //🟢
     func isSymmetric(_ root: Node?) -> Bool {
-        return isMirror(root?.left, root?.right)
+        return isMirrorTree(root1: root?.left, root2: root?.right)
     }
     
-    private func isMirror(_ t1: Node?, _ t2: Node?) -> Bool {
-        if t1 == nil && t2 == nil {
-            return true
-        }
-        if t1 == nil || t2 == nil {
-            return false
-        }
-        
-        return t1!.data == t2!.data &&
-        isMirror(t1!.left, t2!.right) &&
-        isMirror(t1!.right, t2!.left)
-    }
     
     /*Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.*/
     //https://leetcode.com/problems/path-sum/submissions/1604264946/

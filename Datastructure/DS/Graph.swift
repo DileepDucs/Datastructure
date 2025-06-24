@@ -57,9 +57,9 @@ class GraphDataStructure {
         -Dequeue a node, process it, and mark it as visited.
         -Enqueue all unvisited neighbors.
      
-     */
+     *///🟢
     func bfs(graph: Graph, start: Int) {
-        var visited: Set<Int> = []
+        var visited = Set<Int>()
         var queue = Queue<Int>()
         
         queue.enqueue(start)
@@ -108,9 +108,9 @@ class GraphDataStructure {
         -Pop a node, process it, and mark it as visited.
         -Push all unvisited neighbors onto the stack.
      
-     */
+     *///🟢
     func dfs(graph: Graph, start: Int) {
-        var visited: Set<Int> = []
+        var visited = Set<Int>()
         var stack = Stack<Int>()
         
         stack.push(start)
@@ -240,7 +240,7 @@ class GraphDataStructure {
     }
     
     
-    // Recursion
+    // Recursion // Not important
     func bfsRecursiveAdjacencyMatrix(_ matrix: [[Int]], start: Int) {
         let n = matrix.count
         var visited = Array(repeating: false, count: n)
@@ -281,8 +281,8 @@ class GraphDataStructure {
     
     //When using recursion, the call stack provided by the system acts as the stack automatically.
     //No other custom stack is required
-    
-    func dfsRecursive(_ matrix: [[Int]], start: Int) {
+    // Not important
+    func dfsRecursiveAdjacencyMatrix(_ matrix: [[Int]], start: Int) {
         let n = matrix.count
         var visited = Array(repeating: false, count: n)
         
@@ -298,6 +298,230 @@ class GraphDataStructure {
         }
         dfs(start)
     }
+    
+    /*2. Detecting a Path Between Two Nodes(source and destination)
+        * Given an undirected graph, check if there is a path between two nodes.
+     https://leetcode.com/problems/find-if-path-exists-in-graph/
+     There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). The edges in the graph are represented as a 2D integer array edges, where each edges[i] = [ui, vi] denotes a bi-directional edge between vertex ui and vertex vi. Every vertex pair is connected by at most one edge, and no vertex has an edge to itself.
+
+     You want to determine if there is a valid path that exists from vertex source to vertex destination.
+     Given edges and the integers n, source, and destination, return true if there is a valid path from source to destination, or false otherwise.
+
+     Example 1:
+
+     Input: n = 3, edges = [[0,1],[1,2],[2,0]], source = 0, destination = 2
+     Output: true
+     Explanation: There are two paths from vertex 0 to vertex 2:
+     - 0 → 1 → 2
+     - 0 → 2
+     */
+    
+    func validPath(_ n: Int, _ edges: [[Int]], _ source: Int, _ destination: Int) -> Bool {
+            let graph = Graph()
+            for edge in edges {
+                let u = edge[0]
+                let v = edge[1]
+                graph.addEdge(u, v, bidirectional: true)
+            }
+            return bfsTraversal(graph: graph, source: source, destination: destination)
+        }
+
+        func bfsTraversal(graph: Graph, source: Int, destination: Int) -> Bool {
+            var queue = Queue<Int>()
+            var visited: Set<Int> = []
+            queue.enqueue(source)
+            visited.insert(source)
+            
+            while !queue.isEmpty {
+                guard let current = queue.dequeue() else { return false }
+                if current == destination {
+                    return true
+                }
+                if let neighbors = graph.adjacencyList[current] {
+                    for neighbor in neighbors {
+                        if !visited.contains(neighbor) {
+                            visited.insert(neighbor)
+                            queue.enqueue(neighbor)
+                        }
+                    }
+                }
+            }
+            return false
+        }
+    }
+    
+    
+    
+    /*To check if an undirected graph is connected or not using DFS or BFS
+     ✅ What it means for a graph to be "connected":
+     All nodes are reachable from any starting node.
+     In BFS, if we visit all nodes starting from any node (e.g., node 0), and the visited count equals the total number of nodes n, the graph is connected.
+     https://www.geeksforgeeks.org/java-program-to-check-whether-undirected-graph-is-connected-using-dfs/
+     
+     let n = 5
+     let edges = [[0, 1], [1, 2], [2, 3], [3, 4]]
+     */
+    
+    // there should be helper function to generate adjecency List for given edges()
+    func isConnectedUsingBFS(graph: Graph, start: Int, n: Int) -> Bool{
+        var visited = Set<Int>()
+        var queue = Queue<Int>()
+        
+        queue.enqueue(start)
+        visited.insert(start)
+        
+        while !queue.isEmpty {
+            guard let current = queue.dequeue() else { return false } // Dequeue
+            if let neighbors = graph.adjacencyList[current] {
+                for neighbor in neighbors {
+                    if !visited.contains(neighbor) {
+                        queue.enqueue(neighbor) // Enqueue unvisited neighbors
+                        visited.insert(neighbor)
+                    }
+                }
+            }
+        }
+        return n == visited.count
+    }
+    
+    /*
+     3. Number of Connected Components
+         * Count how many disconnected parts (components) are in a graph.
+     https://leetcode.com/problems/count-the-number-of-complete-components/
+     
+     https://www.youtube.com/watch?v=6-dJ6nJ6t4c
+     */
+    func countCompleteComponents(_ n: Int, _ edges: [[Int]]) -> Int {
+        var graph = Array(repeating: [Int](), count: n)
+        var visited = Array(repeating: false, count: n)
+        var result = 0
+        for edge in  edges {
+            let u = edge[0]
+            let v = edge[1]
+            graph[u].append(v)
+            graph[v].append(u)
+        }
+        
+        for i in 0..<n {
+            if visited[i] {
+                continue
+            }
+            var queue = Queue<Int>()
+            queue.enqueue(i)
+            visited[i] = true
+            var nodeCount = 0
+            var edgeCount = 0
+            
+            while !queue.isEmpty {
+                guard let current = queue.dequeue() else { break }
+                nodeCount += 1
+                edgeCount += graph[current].count
+                
+                for neighobur in graph[current] {
+                    if !visited[neighobur] {
+                        queue.enqueue(neighobur)
+                        visited[neighobur] = true
+                    }
+                }
+            }
+            
+            if edgeCount == nodeCount * (nodeCount - 1) {
+                result += 1
+            }
+        }
+        return result
+    }
+    
+    /*Time Complexity
+     Time    O(N + E)
+     Space    O(N + E) (graph + visited + queue)
+     */
+    
+    
+    /**
+     4. Matrix as a Graph
+         * Number of islands (Leetcode 200)
+     Problem Summary:
+     You’re given a 2D grid of '1's (land) and '0's (water).
+     An island is formed by connecting adjacent lands horizontally or vertically.
+     Your task is to count the number of islands.
+     https://www.youtube.com/watch?v=ZgCZfXPo3hI
+     https://leetcode.com/problems/number-of-islands/description/
+     */
+    func numIslands(_ grid: [[Character]]) -> Int {
+        if grid.isEmpty || grid[0].isEmpty {
+            return 0
+        }
+        var mutableGrid = grid
+        var resultCount = 0
+        for i in 0..<mutableGrid.count {
+            for j in 0..<mutableGrid[i].count {
+                if mutableGrid[i][j] == "1" {
+                    numIslandsDFS(&mutableGrid, i: i, j: j)
+                    resultCount += 1
+                }
+            }
+        }
+        return resultCount
+    }
+    
+    func numIslandsDFS(_ grid: inout [[Character]], i: Int, j: Int) {
+        if i < 0 || i >= grid.count || j < 0 || j >= grid[0].count || grid[i][j] == "0" {
+            return
+        }
+        grid[i][j] = "0"
+        numIslandsDFS(&grid, i: i + 1, j: j)
+        numIslandsDFS(&grid, i: i - 1, j: j)
+        numIslandsDFS(&grid, i: i, j: j + 1)
+        numIslandsDFS(&grid, i: i, j: j - 1)
+    }
+    
+    /*Time Complexity
+     Time   O(nxm)
+     Space  O(nxm)
+     */
+    
+    
+    /**
+        733 - Flood Fill
+        https://leetcode.com/problems/flood-fill/description/
+     */
+    func floodFill(_ image: [[Int]], _ sr: Int, _ sc: Int, _ color: Int) -> [[Int]] {
+        var mutableImage = image
+        let startColor = mutableImage[sr][sc]
+        
+        if startColor == color { return image }
+        
+        func dfs(r: Int, c: Int) {
+            if r < 0 || c < 0 || r >= mutableImage.count || c >= mutableImage[0].count || mutableImage[r][c] != startColor {
+                return
+            }
+            
+            mutableImage[r][c] = color
+            dfs(r: r, c: c + 1)
+            dfs(r: r, c: c - 1)
+            dfs(r: r + 1, c: c)
+            dfs(r: r - 1, c: c)
+        }
+        
+        dfs(r: sr, c: sc)
+        return mutableImage
+    }
+    
+    /*Time: O(N × M) — each cell is visited once.
+     Space: O(N × M) worst case due to recursion stack or queue.
+     */
+    
+    
+    /*
+     5. Cycle Detection
+         * Detect a cycle in an undirected graph.
+     https://leetcode.com/problems/detect-cycles-in-2d-grid/description/
+     https://www.geeksforgeeks.org/detect-cycle-undirected-graph/
+     */
+    
+    
+    
     
     //https://app.codility.com/demo/results/trainingGXYJTW-5XM/
     public func solution(_ A : [Int], _ B : [Int]) -> Int {
@@ -335,6 +559,5 @@ class GraphDataStructure {
             
         }
         return maxResult
-    }
 
 }

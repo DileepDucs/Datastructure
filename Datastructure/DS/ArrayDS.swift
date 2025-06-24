@@ -1,5 +1,5 @@
 //
-//  Array.swift
+//  ArrayDS.swift
 //  Datastructure
 //
 //  Created by Dileep Jaiswal on 30/12/24.
@@ -8,6 +8,145 @@
 import Foundation
 
 class ArrayDS {
+    
+    /**
+     https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/716600320/
+     
+     In the classic "Search in Rotated Sorted Array" problem:
+     ✅ The array is assumed to be originally sorted in increasing order, then rotated.
+     ❌ It does not apply directly to arrays sorted in decreasing order — you'd need to modify the logic for that.
+     ✅ For Example:
+     Increasing order rotated:
+
+     Original:   [1, 2, 3, 4, 5, 6, 7]
+     Rotated:    [4, 5, 6, 7, 1, 2, 3]
+     This is what the standard binary search algorithm handles.
+
+     ❌ If the array was originally decreasing, like:
+     Decreasing order rotated:
+
+     Original:   [9, 8, 7, 6, 5, 4, 3]
+     Rotated:    [5, 4, 3, 9, 8, 7, 6]
+     You'd need to invert the comparison logic in the binary search algorithm — because the sorted side goes from high → low instead of low → high.
+
+     🧠 In Short:
+        Case                                Supported by standard algorithm?                          Notes
+     🔼 Increasing + rotated                ✅ Yes (default problem)                         No changes needed
+     🔽 Decreasing + rotated              ❌ No                                                      Requires modified logic
+     */
+    func searchKeyFromSortedRotatedArray(array: [Int], key: Int) -> Int{
+        var low = 0
+        var high = array.count - 1
+        while(low <= high) {
+            let mid = (low + high) / 2
+            if array[mid] == key {
+                return mid
+            }
+            if array[low] <= array[mid] {
+                if array[low] <= key && key <= array[mid] {
+                    high = mid - 1
+                } else {
+                    low = mid + 1
+                }
+            } else {
+                if array[mid] <= key && key <= array[high] {
+                    low = mid + 1
+                } else {
+                    high = mid - 1
+                }
+            }
+        }
+        return -1
+    }
+    
+    //https://leetcode.com/problems/koko-eating-bananas/description/
+    /**
+     Koko loves bananas. There are piles of bananas, and each pile has a certain number of bananas. Koko can decide her eating speed k (bananas/hour). She has h hours to eat all the bananas.
+
+     Each hour, she chooses one pile and eats up to k bananas from it. If the pile has less than k, she eats all of it and waits for the next hour.
+
+     Goal: Find the minimum integer k such that Koko can eat all the bananas in h hours.
+     */
+    func minEatingSpeed(_ piles: [Int], _ h: Int) -> Int {
+        var max = Int.min
+        for value in piles {
+            if value > max {
+                max = value
+            }
+        }
+        var left = 1
+        var right = max
+        while left < right {
+            let mid = (left + right) / 2
+            if canFinish(piles: piles, h: h, k: mid) {
+                right = mid
+            } else {
+                left = mid + 1
+            }
+        }
+        return left
+    }
+    
+    func canFinish(piles: [Int], h: Int, k: Int) -> Bool {
+        var hours = 0
+        for pile in piles {
+            let value = (pile + k - 1) / k
+            hours += value
+        }
+        return hours <= h
+    }
+    /**
+     This approach is O(n * log m), where n is the number of piles and m is the max pile size."
+     */
+    
+    
+    
+    //https://leetcode.com/problems/zero-array-transformation-i/description/
+        
+    func isZeroArray(_ nums: [Int], _ queries: [[Int]]) -> Bool {
+        let n = nums.count
+        var diff = Array(repeating: 0, count: n + 1)
+        
+        // Mark difference array
+        for query in queries {
+            let l = query[0]
+            let r = query[1]
+            diff[l] += 1
+            if r + 1 < n {
+                diff[r + 1] -= 1
+            }
+        }
+        
+        // Apply prefix sum and compare with nums
+        var running = 0
+        for i in 0..<n {
+            running += diff[i]
+            if running < nums[i] {
+                return false
+            }
+        }
+        return true
+    }
+    
+    // Find the first non-repeating character in a string (non repeating, nonrepeating)
+    
+    func firstUniqueChar(_ s: String) -> Character? {
+        var dictionary = [Character: Int]()
+        for key in s {
+            if let value = dictionary[key] {
+                dictionary[key] = value + 1
+            } else {
+                dictionary[key] = 1
+            }
+        }
+        
+        for key in s {
+            if dictionary[key] == 1 {
+                return key
+            }
+        }
+        return nil
+    }
     
     /**
      Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the i
@@ -22,22 +161,37 @@ class ArrayDS {
      Output: [[1,5]]
      Explanation: Intervals [1,4] and [4,5] are considered overlapping.
      https://leetcode.com/problems/merge-intervals/submissions/1554057123/
+        
+     $0[0] < $1[0]
+     This means:
+     $0 and $1 are two intervals (e.g., [2,6] and [1,3])
+     $0[0] → the start of the first interval
+     $1[0] → the start of the second interval
+     
      */
+    //🔴
     func merge(_ intervals: [[Int]]) -> [[Int]] {
-        guard intervals.count > 1 else { return intervals}
-        let sortedIntervales = intervals.sorted { $0[1] < $1[0] }
+        guard intervals.count > 1 else { return intervals }
         
-        // Step 2: Merge intervals
-        var resultArray = [[Int]]()
+        // Step 1: Sort the intervals by start time
+        let sorted = intervals.sorted { $0[0] < $1[0] }
         
-        for value in sortedIntervales {
-            if resultArray.isEmpty || resultArray.last![1] < value[0] {
-                resultArray.append(value)
+        var result: [[Int]] = [sorted[0]]
+        
+        // Step 2: Iterate and merge
+        for i in 1..<sorted.count {
+            guard let last = result.last else { continue }
+            let current = sorted[i]
+            
+            if current[0] <= last[1] {
+                // Overlap, so merge
+                result[result.count - 1][1] = Swift.max(last[1], current[1])
             } else {
-                resultArray[resultArray.count - 1][1] = Swift.max(resultArray.last![1], value[1])
+                // No overlap, append
+                result.append(current)
             }
         }
-        return resultArray
+        return result
     }
     
     /**
@@ -382,19 +536,22 @@ class ArrayDS {
     }
     
     // TWO SUM https://leetcode.com/problems/two-sum/description/
+    //Given an array of integers nums and an integer target, return
+    //indices of the two numbers such that they add up to target.
     func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
-            var map = [Int: Int]()
-            for i in 0..<nums.count {
-                let value = nums[i]
-                var complement = target - value
-                if let index = map[complement] {
-                    return [i, index]
-                } else {
-                    map[value] = i
-                }
+        var map = [Int: Int]()
+        for i in 0..<nums.count {
+            let value = nums[i]
+            var complement = target - value
+            if let index = map[complement] {
+                return [i, index]
+            } else {
+                map[value] = i
             }
-            return [0, 0]
         }
+        return [0, 0]
+    }
+        
 }
 
 
