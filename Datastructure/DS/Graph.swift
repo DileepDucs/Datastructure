@@ -190,14 +190,14 @@ class GraphDataStructure {
      */
     
     //https://medium.com/@dileep.ducs/graph-adjacency-matrix-in-swift-fcb811c03730
-    
+    ///🟢
     func bfsAdjacencyMatrix(_ matrix: [[Int]], start: Int) {
         let n = matrix.count
-        var visited = Array(repeating: false, count: n)
+        var visited = Set<Int>()
         var queue = Queue<Int>()
         
         // Step 1: Start at node `start`
-        visited[start] = true
+        visited.insert(start)
         queue.enqueue(start)
         
         while !queue.isEmpty {
@@ -206,8 +206,8 @@ class GraphDataStructure {
             
             // Step 2: Check all connections for current node
             for neighbor in 0..<n {
-                if matrix[current][neighbor] == 1 && !visited[neighbor] {
-                    visited[neighbor] = true
+                if matrix[current][neighbor] == 1 && !visited.contains(neighbor) {
+                    visited.insert(neighbor)
                     queue.enqueue(neighbor)
                 }
             }
@@ -216,22 +216,23 @@ class GraphDataStructure {
     
     //Depth-First Search (DFS) using a stack (iterative version) on a connected graph represented by an adjacency matrix, implemented in Swift.
     
+    ///🟢
     func dfsIterativeAdjacencyMatrix(_ matrix: [[Int]], start: Int) {
         let n = matrix.count
-        var visited = Array(repeating: false, count: n)
+        var visited = Set<Int>()
         var stack = Stack<Int>()
         stack.push(start)
         
         while !stack.isEmpty {
             guard let current = stack.pop() else { return }
             
-            if !visited[current] {
-                visited[current] = true
+            if !visited.contains(current) {
+                visited.insert(current)
                 print("Visited node:", current)
                 
                 // Push neighbors in reverse to maintain left-to-right traversal
                 for neighbor in stride(from: n - 1, through: 0, by: -1) {
-                    if matrix[current][neighbor] == 1 && !visited[neighbor] {
+                    if matrix[current][neighbor] == 1 && !visited.contains(neighbor) {
                         stack.push(neighbor)
                     }
                 }
@@ -243,18 +244,18 @@ class GraphDataStructure {
     // Recursion // Not important
     func bfsRecursiveAdjacencyMatrix(_ matrix: [[Int]], start: Int) {
         let n = matrix.count
-        var visited = Array(repeating: false, count: n)
+        var visited = Set<Int>()
         var queue = Queue<Int>()
         queue.enqueue(start)
-        visited[start] = true
+        visited.insert(start)
 
         func bfsHelper(_ queue: inout Queue<Int>) {
             guard let current = queue.dequeue() else { return }
             print("Visited node:", current)
 
             for neighbor in 0..<n {
-                if matrix[current][neighbor] == 1 && !visited[neighbor] {
-                    visited[neighbor] = true
+                if matrix[current][neighbor] == 1 && !visited.contains(neighbor) {
+                    visited.insert(neighbor)
                     queue.enqueue(neighbor)
                 }
             }
@@ -284,14 +285,14 @@ class GraphDataStructure {
     // Not important
     func dfsRecursiveAdjacencyMatrix(_ matrix: [[Int]], start: Int) {
         let n = matrix.count
-        var visited = Array(repeating: false, count: n)
+        var visited = Set<Int>()
         
         func dfs(_ node: Int) {
-            visited[node] = true
+            visited.insert(node)
             print("Visited:", node)
             
             for neighbor in 0..<n {
-                if matrix[node][neighbor] == 1 && !visited[neighbor] {
+                if matrix[node][neighbor] == 1 && !visited.contains(neighbor) {
                     dfs(neighbor)
                 }
             }
@@ -315,7 +316,7 @@ class GraphDataStructure {
      - 0 → 1 → 2
      - 0 → 2
      */
-    
+    ///🟢
     func validPath(_ n: Int, _ edges: [[Int]], _ source: Int, _ destination: Int) -> Bool {
             let graph = Graph()
             for edge in edges {
@@ -391,6 +392,7 @@ class GraphDataStructure {
      
      https://www.youtube.com/watch?v=6-dJ6nJ6t4c
      */
+    ////🔴
     func countCompleteComponents(_ n: Int, _ edges: [[Int]]) -> Int {
         var graph = Array(repeating: [Int](), count: n)
         var visited = Array(repeating: false, count: n)
@@ -426,6 +428,50 @@ class GraphDataStructure {
             }
             
             if edgeCount == nodeCount * (nodeCount - 1) {
+                result += 1
+            }
+        }
+        return result
+    }
+
+    // Same above problems
+    func countCompleteComponentsBFS(_ n: Int, _ edges: [[Int]]) -> Int {
+        let graph = Graph()
+        for value in edges {
+            let u = value[0]
+            let v = value[1]
+            graph.addEdge(u, v, bidirectional: true)
+        }
+        var result = 0
+        var queue = Queue<Int>()
+        var visitaed = Set<Int>()
+    
+        for start in 0..<n {
+            if visitaed.contains(start) {
+                continue
+            }
+            queue.enqueue(start)
+            visitaed.insert(start)
+        
+            var nodeCount = 0
+            var edgeCount = 0
+            while !queue.isEmpty {
+                guard let current = queue.dequeue() else { break }
+            
+                // main logic is here
+                nodeCount += 1
+                edgeCount += graph.adjacencyList[current]?.count ?? 0
+            
+                if let nighbours = graph.adjacencyList[current] {
+                    for nighbour in nighbours {
+                        if !visitaed.contains(nighbour) {
+                            visitaed.insert(current)
+                            queue.enqueue(current)
+                        }
+                    }
+                }
+            }
+            if edgeCount == (nodeCount * (nodeCount - 1)) {
                 result += 1
             }
         }
@@ -512,6 +558,48 @@ class GraphDataStructure {
      Space: O(N × M) worst case due to recursion stack or queue.
      */
     
+
+    func orangesRotting(_ grid: [[Int]]) -> Int {
+        var mutableGrid = grid
+        var resultCount = 0
+        var freshApple = 0
+        var time = 0
+        var queue = Queue<(Int, Int)>()
+        for i in 0..<grid.count {
+            for j in 0..<grid[i].count {
+                if grid[i][j] == 2 {
+                    queue.enqueue((i, j))
+                } else if grid[i][j] == 1 {
+                    freshApple += 1
+                }
+            }
+        }
+        
+        if freshApple == 0 { return 0 }
+        
+        var directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+        
+        while !queue.isEmpty {
+            guard let (r, c) = queue.dequeue() else { break }
+        
+            var isUpdate = false
+            
+            for (dr, dc) in directions {
+                let nRow = r + dr
+                let nCol = c + dc
+                if nRow >= 0 && nCol >= 0 && nRow < grid.count && nCol < grid[0].count && mutableGrid[nRow][nCol] == 1 {
+                    mutableGrid[nRow][nCol] = 2
+                    isUpdate = true
+                    queue.enqueue((nRow, nCol))
+                    resultCount += 1
+                }
+            }
+            if isUpdate {
+                time += 1
+            }
+        }
+        return freshApple == resultCount ? time : -1
+    }
     
     /*
      5. Cycle Detection
