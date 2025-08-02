@@ -15,10 +15,11 @@ import Foundation
 class TrieNode {
     var children: [Character: TrieNode] = [:]
     var isEnd: Bool = false
+    var word: String?   //Optional: stores the complete word at terminal nodes, useful for certain problems
 }
 
 class Trie {
-    private let root = TrieNode()
+    let root = TrieNode()
 
     init() {}
 

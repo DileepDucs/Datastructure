@@ -607,6 +607,66 @@ class GraphDataStructure {
      https://leetcode.com/problems/detect-cycles-in-2d-grid/description/
      https://www.geeksforgeeks.org/detect-cycle-undirected-graph/
      */
+
+
+    /*
+     Word Search II -
+     https://leetcode.com/problems/word-search-ii/description/
+     
+
+     Given an m x n board of characters and a list of strings words, return all words on the board.
+
+     Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
+     
+     */
+
+    func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
+        let trie = Trie()
+        for word in words {
+            trie.insert(word)
+        }
+        var board = board
+        var results = Set<String>()
+        let rows = board.count
+        let columns = board[0].count
+        for i in 0..<rows {
+            for j in 0..<columns {
+                wordSearchIIdfs(board: &board, row: i, col: j, result: &results, node: trie.root)
+            }
+        }
+        return Array(results)
+    }
+
+    func wordSearchIIdfs(board: inout [[Character]], row: Int, col: Int, result: inout Set<String>, node: TrieNode) {
+        if row < 0 || row >= board.count || col < 0 || col >= board[0].count {
+            return
+        }
+        let char = board[row][col]
+        if char == "#" || node.children[char] == nil {
+            return
+        }
+        guard let nextNode = node.children[char] else { return }
+        if let word = nextNode.word {
+            result.insert(word)
+        }
+        board[row][col] = "#"
+        let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        for (dx, dy) in directions {
+            wordSearchIIdfs(board: &board, row: row + dx, col: col + dy, result: &result, node: nextNode)
+        }
+        
+        // Restore original character
+        board[row][col] = char
+    }
+    
+    // Helper func to read All the words from given Grid.
+    func readAllWords(words: [String]) {
+        for word in words {
+            for char in word {
+
+            }
+        }
+    }
     
     
     
