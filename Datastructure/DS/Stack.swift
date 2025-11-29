@@ -8,6 +8,7 @@
 import UIKit
 
 struct Stack<T> {
+    
     private var array: [T] = []
     
     mutating func push(_ element: T) {
@@ -15,7 +16,6 @@ struct Stack<T> {
     }
     
     mutating func pop() -> T? {
-        
         return array.popLast()
     }
     

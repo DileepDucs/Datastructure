@@ -551,6 +551,30 @@ class ArrayDS {
         }
         return [0, 0]
     }
+    
+    /* Trapping Rain Water
+     https://leetcode.com/problems/trapping-rain-water/description/
+     
+     https://www.youtube.com/watch?v=ZI2z5pq0TqA
+     */
+    //✅
+    func trap(_ height: [Int]) -> Int {
+        var left = 0, right = height.count - 1
+        var maxLeft = height[left], maxRight = height[right]
+        var res = 0
+        while left < right {
+            if height[left] < height[right] {
+                left += 1
+                maxLeft = Swift.max(maxLeft, height[left])
+                res += maxLeft - height[left]
+            } else {
+                right -= 1
+                maxRight = Swift.max(maxRight, height[right])
+                res += maxRight - height[right]
+            }
+        }
+        return res
+    }
         
 }
 

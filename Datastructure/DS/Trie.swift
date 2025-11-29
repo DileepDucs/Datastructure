@@ -9,8 +9,24 @@ import Foundation
 
 // Trie Data Structure
 
+//https://www.notion.so/Implement-Trie-Prefix-Tree-280b852453f480868ba2daaab7e3de96?source=copy_link
 //https://leetcode.com/problems/implement-trie-prefix-tree/description/
 //https://www.youtube.com/watch?v=AXjmTQ8LEoI
+
+/*
+ 208- Implement Trie (Prefix Tree)
+ 
+ A Trie, or prefix tree, is a tree-based data structure that’s useful for storing strings in a way that makes prefix lookups efficient. It’s often used in autocomplete, dictionary, and spell-checker problems.
+ The key idea is that each node represents a character, and a path from the root to a node represents a prefix of one or more words.”
+ 
+ --
+ Implement the Trie class:
+
+ Trie() Initializes the trie object.
+ void insert(String word) Inserts the string word into the trie.
+ boolean search(String word) Returns true if the string word is in the trie (i.e., was inserted before), and false otherwise.
+ boolean startsWith(String prefix) Returns true if there is a previously inserted string word that has the prefix prefix, and false otherwise.
+ */
 
 class TrieNode {
     var children: [Character: TrieNode] = [:]

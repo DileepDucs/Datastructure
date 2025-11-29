@@ -8,9 +8,13 @@
 import Foundation
 
 /*
+    
+ Graph is collection of nodes(vertices) and connections(edges) between them.
+ Graph are used to represent relationship between objects.(ex- social network, map, dependency graph)
+ 
  Graph traversal is a fundamental concept where we visit all nodes in a graph systematically.
+ 
  The two most common traversal techniques are:
-
  Breadth-First Search (BFS) - using  Queue
  Depth-First Search (DFS)- using Stack
  
@@ -600,6 +604,12 @@ class GraphDataStructure {
         }
         return freshApple == resultCount ? time : -1
     }
+
+    /*
+        Check if graph is bipartite (using BFS color assignment)
+     https://leetcode.com/problems/is-graph-bipartite/
+     
+    */
     
     /*
      5. Cycle Detection
@@ -667,8 +677,12 @@ class GraphDataStructure {
             }
         }
     }
-    
-    
+
+    //Minimum cast spanning tree(MST)
+    //Prims - (Algo)
+    //https://leetcode.com/problems/min-cost-to-connect-all-points/
+    //https://www.notion.so/Minimum-cast-spanning-tree-MST-282b852453f4805cacd5d64220f1a166?source=copy_link
+    // Inside FrequentlyAsked (file) interview questions
     
     
     //https://app.codility.com/demo/results/trainingGXYJTW-5XM/

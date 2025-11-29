@@ -6,6 +6,9 @@
 //
 import Foundation
 
+//https://www.notion.so/Dynamic-Programming-DP-in-Swift-252b852453f4802f97b3ca7f431aa7f7?source=copy_link
+
+
 /*
  🧠 What is Dynamic Programming?
  Dynamic Programming (DP) is a method for solving complex problems by breaking them down into simpler subproblems. It solves each subproblem once and stores the result to avoid redundant work. It’s ideal when a problem has:
@@ -25,13 +28,77 @@ import Foundation
  */
 class DynamicProgramming {
     
+    /*
+     72. Edit Distance
+     https://leetcode.com/problems/edit-distance/description/
+     https://www.youtube.com/watch?v=HwDXH35lr0o
+     */
+    func minDistance(_ word1: String, _ word2: String) -> Int {
+        return 0
+    }
+    
+    // 322 Coin Change
+    //https://leetcode.com/problems/coin-change/
+    //https://www.youtube.com/watch?v=NNcN5X1wsaw
+    /*1. Dynamic Programming (Bottom-Up) Memoization
+     We build a DP array where dp[x] = min coins to make amount x.
+     Initialize dp of size amount + 1 with amount + 1 (infinity).
+     dp[0] = 0 (0 coins to make amount 0).
+     For each coin, update dp:
+     dp[x] = min(dp[x], dp[x - coin] + 1)*/
+    func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+        if amount == 0 { return 0 }
+        var dp = Array(repeating: amount + 1, count: amount + 1)
+        dp[0] = 0
+        for x in 1...amount {
+            for coin in coins {
+                if coin <= x {
+                    dp[x] = min(dp[x], dp[x - coin] + 1)
+                }
+            }
+        }
+        return dp[amount] > amount ? -1 : dp[amount]
+    }
+    
+    //Time Complexity: O(amount * n) where n = coins.count
+    //Space Complexity: O(amount)
+    
+    /*Knapsack Problem
+     0/1 Knapsack Problem Explained Visually [This is tough] need to understand carefully
+     https://www.youtube.com/watch?v=qxWu-SeAqe4
+     */
+    
+    func knapsack(weights: [Int], values: [Int], capacity: Int) -> Int {
+        let n = weights.count
+        var dp = Array(repeating: Array(repeating: 0, count: capacity + 1), count: n + 1)
+        
+        for i in 1...n {
+            for w in 1...capacity {
+                if weights[i - 1] <= w {
+                    // Option 1: include item i-1
+                    let include = values[i - 1] + dp[i - 1][w - weights[i - 1]]
+                    // Option 2: exclude item i-1
+                    let exclude = dp[i - 1][w]
+                    dp[i][w] = max(include, exclude)
+                } else {
+                    dp[i][w] = dp[i - 1][w]
+                }
+            }
+        }
+        
+        return dp[n][capacity]
+    }
+    
+    
     // Longest Common Subsequence
     // https://www.youtube.com/watch?v=NnD96abizww // this explanation match with
     //We use Dynamic Programming (DP) to efficiently solve the problem.
     
     /*  Time Complexity: O(m×n), where m and n are the lengths of text1 and text2.
-        Space Complexity: O(m×n) due to the DP table.
+     Space Complexity: O(m×n) due to the DP table.
      */
+    
+    
     func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
         let m = text1.count
         let n = text2.count
@@ -129,137 +196,130 @@ class DynamicProgramming {
         return max
     }
     
+    func possibleRect(_ A : [Int], _ B : [Int]) -> Int{
+        var maxResult = 0
+        var rectangles = [(Int, Int)]()
+        let n = A.count
+        var dict = [Int: [(Int, Int)]]()
+        for i in 0..<n {
+            let width = min(A[i], B[i])
+            let height = max(A[i], B[i])
+            rectangles.append((width, height))
+        }
+        
+        for value in rectangles {
+            let width = value.0
+            let height = value.1
+            if dict[width] == nil {
+                dict[width] = []
+            }
+            if dict[height] == nil {
+                dict[height] = []
+            }
+            if width == height {
+                dict[width]?.append(value)
+            } else {
+                dict[width]?.append((width, height))
+                dict[height]?.append((height, width))
+            }
+        }
+        
+        for (_, values) in dict {
+            let temp = getResultCount(array: values)
+            maxResult = max(maxResult, temp)
+        }
+        return maxResult
+    }
+    
+    func getResultCount(array: [(Int, Int)]) -> Int {
+        var maxFrequency = 0
+        var dict = [Int : Int]()
+        var resultKey = 0
+        var result = 0
+        for (_, b) in array {
+            if let value = dict[b] {
+                dict[b] = value + 1
+            } else {
+                dict[b] = 1
+            }
+        }
+        for (key, value) in dict {
+            if value > maxFrequency {
+                maxFrequency = value
+                resultKey = key
+            }
+        }
+        for (_, b) in array {
+            if b == resultKey || b - 1 == resultKey || b + 1 == resultKey {
+                result = result + 1
+            }
+        }
+        return result
+    }
+    
+    
+    
+    public func solution(_ B : [String]) -> Int {
+        // All possible direction down, left and right
+        let possibleDirection = [(1, 0), (0,  -1), (0, 1)]
+        
+        // converting array of string into 2d array
+        var cave = [[Character]]()
+        for caveString in B {
+            let array = Array(caveString)
+            cave.append(array)
+        }
+        let n = cave.count // total row in 2d array
+        let m = cave[0].count // total column in 2d array
+        
+        // check if expedition is possible into a cave
+        guard cave[0][0] == "." && cave[n-1][m - 1] == "." else {
+            return -1
+        }
+        var maxPossibleWay = 0
+        var visitedPath = Set<[Int]>()
+        
+        // DFS traversal to travers all possible position in cave
+        func dfsTraversal(row: Int, column: Int, possibleCount: Int) {
+            if row == n - 1 && column == m - 1 {
+                maxPossibleWay = max(maxPossibleWay, possibleCount)
+                return
+            }
+            
+            visitedPath.insert([row, column])
+            
+            for (r, c) in possibleDirection {
+                let newRow = row + r
+                let newColumn = column + c
+                if newRow >= 0, newRow < n, newColumn >= 0, newColumn < m, cave[newRow][newColumn] == ".", !visitedPath.contains([newRow, newColumn]) {
+                    dfsTraversal(row: newRow, column: newColumn, possibleCount: possibleCount + 1)
+                }
+            }
+            visitedPath.remove([row, column])
+            
+        }
+        // Start DFS from (0,0)
+        dfsTraversal(row: 0, column: 0, possibleCount: 0)
+        
+        return maxPossibleWay
+    }
 }
-
-/**
- 
- func possibleRect(_ A : [Int], _ B : [Int]) -> Int{
-     var maxResult = 0
-     var rectangles = [(Int, Int)]()
-     let n = A.count
-     var dict = [Int: [(Int, Int)]]()
-     for i in 0..<n {
-         let width = min(A[i], B[i])
-         let height = max(A[i], B[i])
-         rectangles.append((width, height))
-     }
-     
-     for value in rectangles {
-         let width = value.0
-         let height = value.1
-         if dict[width] == nil {
-             dict[width] = []
-         }
-         if dict[height] == nil {
-             dict[height] = []
-         }
-         if width == height {
-             dict[width]?.append(value)
-         } else {
-             dict[width]?.append((width, height))
-             dict[height]?.append((height, width))
-         }
-     }
-     
-     for (_, values) in dict {
-         let temp = getResultCount(array: values)
-         maxResult = max(maxResult, temp)
-     }
-     return maxResult
- }
- 
- func getResultCount(array: [(Int, Int)]) -> Int {
-     var maxFrequency = 0
-     var dict = [Int : Int]()
-     var resultKey = 0
-     var result = 0
-     for (a, b) in array {
-         if let value = dict[b] {
-             dict[b] = value + 1
-         } else {
-             dict[b] = 1
-         }
-     }
-     for (key, value) in dict {
-         if value > maxFrequency {
-             maxFrequency = value
-             resultKey = key
-         }
-     }
-     for (a, b) in array {
-         if b == resultKey || b - 1 == resultKey || b + 1 == resultKey {
-             result = result + 1
-         }
-     }
-     return result
- }
- 
- 
- 
- public func solution(_ B : [String]) -> Int {
- // All possible direction down, left and right
-     let possibleDirection = [(1, 0), (0,  -1), (0, 1)]
-
-     // converting array of string into 2d array
-     var cave = [[Character]]()
-     for caveString in B {
-         let array = Array(caveString)
-         cave.append(array)
-     }
-     let n = cave.count // total row in 2d array
-     let m = cave[0].count // total column in 2d array
-
-     // check if expedition is possible into a cave
-     guard cave[0][0] == "." && cave[n-1][m - 1] == "." else {
-         return -1
-     }
-     var maxPossibleWay = 0
-     var visitedPath = Set<[Int]>()
-         
-         // DFS traversal to travers all possible position in cave
-     func dfsTraversal(row: Int, column: Int, possibleCount: Int) {
-         if row == n - 1 && column == m - 1 {
-             maxPossibleWay = max(maxPossibleWay, possibleCount)
-             return
-         }
-             
-         visitedPath.insert([row, column])
-             
-         for (r, c) in possibleDirection {
-             let newRow = row + r
-             let newColumn = column + c
-             if newRow >= 0, newRow < n, newColumn >= 0, newColumn < m, cave[newRow][newColumn] == ".", !visitedPath.contains([newRow, newColumn]) {
-                 dfsTraversal(row: newRow, column: newColumn, possibleCount: possibleCount + 1)
-                 }
-             }
-             visitedPath.remove([row, column])
-             
-         }
-     // Start DFS from (0,0)
-     dfsTraversal(row: 0, column: 0, possibleCount: 0)
-
-     return maxPossibleWay
- }
  
  
  
  
  
- 
- 
- 
- func exicuteArray() {
-     //let array = ArrayDS()
-     //let value = array.subarraySum([1, 1, 1], 2)
-     //let value = array.maximumSubarraySum([8,5,20,2,9], 1)
-     //print(value)
-     //print(array.binaryGap(9))
-     //let graphData = GraphDataStructure()
-     //graphData.testingGraph()
-     //let value = graphData.solution([2, 3, 2, 3, 5],  [3, 4, 2, 4, 2])
-     
-     let tree = Tree()
-     //tree.problems()
- }
- */
+// func exicuteArray() {
+//     //let array = ArrayDS()
+//     //let value = array.subarraySum([1, 1, 1], 2)
+//     //let value = array.maximumSubarraySum([8,5,20,2,9], 1)
+//     //print(value)
+//     //print(array.binaryGap(9))
+//     //let graphData = GraphDataStructure()
+//     //graphData.testingGraph()
+//     //let value = graphData.solution([2, 3, 2, 3, 5],  [3, 4, 2, 4, 2])
+//     
+//     let tree = Tree()
+//     //tree.problems()
+// }
 

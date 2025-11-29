@@ -7,6 +7,11 @@
 
 import Foundation
 
+/*
+ A tree is a non-linear data structure where data is arranged in a hierarchy. It has a root at the top and nodes connected like branches.
+    Each node can have multiple children but only one parent. It is useful for organizing and searching data efficiently.
+ */
+
 class Tree {
     
     class Node {

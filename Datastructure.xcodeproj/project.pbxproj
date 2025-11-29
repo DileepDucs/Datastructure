@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7287D4532EA00BD3005A337E /* Graph+Dijkstra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7287D4522EA00BC5005A337E /* Graph+Dijkstra.swift */; };
+		72EC5EB52EDB416000C0EAEF /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EC5EB42EDB415B00C0EAEF /* Practice.swift */; };
 		F018F7B62C2FD17600F546CE /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F018F7B52C2FD17600F546CE /* LinkedList.swift */; };
 		F018F7BA2C2FD1E900F546CE /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F018F7B92C2FD1E900F546CE /* Stack.swift */; };
 		F041D8CC2C2F08640084F91A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F041D8CB2C2F08640084F91A /* AppDelegate.swift */; };
@@ -27,9 +29,12 @@
 		F0C8528C2DE38B3F005EB28D /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C8528B2DE38B38005EB28D /* LRUCache.swift */; };
 		F0D829532D58A61900BBC530 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D829522D58A61900BBC530 /* Tree.swift */; };
 		F0D829552D5B253300BBC530 /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D829542D5B252700BBC530 /* Number.swift */; };
+		F0E770D92E3F4EE500C202BD /* FrequentlyAsked.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E770D82E3F4ED200C202BD /* FrequentlyAsked.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7287D4522EA00BC5005A337E /* Graph+Dijkstra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Graph+Dijkstra.swift"; sourceTree = "<group>"; };
+		72EC5EB42EDB415B00C0EAEF /* Practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
 		F018F7B52C2FD17600F546CE /* LinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
 		F018F7B92C2FD1E900F546CE /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		F041D8C82C2F08640084F91A /* Datastructure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Datastructure.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +57,7 @@
 		F0C8528B2DE38B38005EB28D /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
 		F0D829522D58A61900BBC530 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		F0D829542D5B252700BBC530 /* Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Number.swift; sourceTree = "<group>"; };
+		F0E770D82E3F4ED200C202BD /* FrequentlyAsked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentlyAsked.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +71,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7287D4512EA00BB8005A337E /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				F07E07F92D66C0220070B8A4 /* Graph.swift */,
+				7287D4522EA00BC5005A337E /* Graph+Dijkstra.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
 		F018F7B72C2FD18700F546CE /* DS */ = {
 			isa = PBXGroup;
 			children = (
+				7287D4512EA00BB8005A337E /* Graph */,
+				72EC5EB42EDB415B00C0EAEF /* Practice.swift */,
+				F0E770D82E3F4ED200C202BD /* FrequentlyAsked.swift */,
 				F0A55D5B2E07EB0F0015049B /* Trie.swift */,
 				F0A55D592E07D7690015049B /* String.swift */,
 				F0C8528B2DE38B38005EB28D /* LRUCache.swift */,
@@ -80,7 +98,6 @@
 				F06FD8B42D505B7A003FF5DF /* DoublyLinkedList.swift */,
 				F0C3406D2D2315AB0031CAD2 /* ArrayDS.swift */,
 				F0D829522D58A61900BBC530 /* Tree.swift */,
-				F07E07F92D66C0220070B8A4 /* Graph.swift */,
 			);
 			path = DS;
 			sourceTree = "<group>";
@@ -207,9 +224,12 @@
 				F0D829552D5B253300BBC530 /* Number.swift in Sources */,
 				F0B503E92DFDD2B300FE6608 /* APIService.swift in Sources */,
 				F041D8D02C2F08640084F91A /* ViewController.swift in Sources */,
+				F0E770D92E3F4EE500C202BD /* FrequentlyAsked.swift in Sources */,
 				F0C3406C2D2155350031CAD2 /* Queue.swift in Sources */,
 				F0C3406E2D2315AB0031CAD2 /* ArrayDS.swift in Sources */,
+				7287D4532EA00BD3005A337E /* Graph+Dijkstra.swift in Sources */,
 				F0C8528C2DE38B3F005EB28D /* LRUCache.swift in Sources */,
+				72EC5EB52EDB416000C0EAEF /* Practice.swift in Sources */,
 				F0D829532D58A61900BBC530 /* Tree.swift in Sources */,
 				F08C03152D6DA0C800869B8C /* DynamicProgramming.swift in Sources */,
 				F06FD8B52D505B7A003FF5DF /* DoublyLinkedList.swift in Sources */,
