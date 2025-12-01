@@ -8,9 +8,11 @@
 import Foundation
 
 /*
- A tree is a non-linear data structure where data is arranged in a hierarchy. It has a root at the top and nodes connected like branches.
+ A tree is a non-linear hierarchal data structure. It has a root at the top and nodes connected like branches.
     Each node can have multiple children but only one parent. It is useful for organizing and searching data efficiently.
  */
+
+//https://medium.com/@dileep.ducs/tree-traversal-algorithm-in-swift-87cf9aa7ce72
 
 class Tree {
     
@@ -28,9 +30,12 @@ class Tree {
      */
     
     //MARK: Recurcive
+    //Base case — If the node is nil, stop recursion.
+    
     //Recursive Inorder Traversal (DFS)
     //https://www.youtube.com/watch?v=4_UDUj1j1KQ&t=5s // recursion traversal
     //🟢
+    /*“This is a recursive in-order traversal: go left, visit node, then go right. The time complexity is O(n) and for BSTs it prints values in sorted order.”*/
     func inorderTraversal(root: Node?) {
         guard let root = root else { return }
         inorderTraversal(root: root.left)
@@ -38,7 +43,10 @@ class Tree {
         inorderTraversal(root: root.right)
     }
     
+    //Recursive Preorder Traversal (DFS)
     //🟢
+    //This is a recursive pre-order traversal: visit node, go left, then go right. The time complexity is O(n).
+
     func preorderTraversal(root: Node?) {
         guard let root = root else { return }
         print("\(root.data)")
@@ -46,7 +54,9 @@ class Tree {
         preorderTraversal(root: root.right)
     }
     
+    // Recursive postorder traversal
     //🟢
+    // This is recursive post-order traversal: go left, go right, then visit node. the time complexity is O(n)
     func postOrderTraversal(root: Node?) {
         guard let root = root else { return }
         postOrderTraversal(root: root.left)
@@ -54,11 +64,38 @@ class Tree {
         print("\(root.data)")
     }
     
+    /*
+     ⏱️ Time Complexity Analysis
+     The time complexity for inorder, preorder and postorder traversals of a binary tree is O(n), where n is the number of nodes in the tree.
+     The time compelxity is the linear, meaning the time taken grows proponatailly to the size of the input(the number of nodes).
+     
+     Type                       Complexity
+     Time                       O(n) — visits each node once
+     Space                      O(h) — recursion stack height (h = tree height)
+     Worst case (skewed tree): O(n)
+     Balanced tree: O(log n)
+     
+     💻 Space Complexity Analysis
+     The space complexity for these traversal is typically analysed based on the auxilary space required for the function call stack during recursion or for the explicit stack/queue used in iterative implementation.
+     Average Case (Balanced Tree): The Depth(Height) of a balanced binary tree is O(log(n)) - since the maximum number of recursive calls
+     simultaneously on the stack is equal to the height of the tree, the space complexity is log(n)
+     Worst Case (Skewed Tree): In the worst case, such as completely skewed tree, the height of the tree in O(n). In thios scenerio the space omplexity is O(n)
+     
+     */
+    
     //MARK: Iterative
     
     //10. How do you print all nodes of a given binary tree using inorder traversal without recursion?
     //Inorder Tree Traversal using Stack in Swift
     //Iterative Inorder Traversal (Using Stack) (DFS Traversal)
+    /*🧩 Why a Stack?
+     Recursion uses an implicit call stack.
+     Since we are writing iterative, we maintain that stack manually.
+     So every time a node is pushed → “I’ll return here after finishing the left subtree.”
+     
+     “This is an iterative in-order traversal using a stack. We push all left nodes, then process the node, then move to the right subtree. This avoids recursion but still ensures the order is Left → Node → Right. It runs in O(n) time and O(h) space.”
+     */
+    
     //🔴
     func inorderTreeTraversalIterative(root: Node?) {
         var stack = Stack<Node>()
@@ -74,6 +111,13 @@ class Tree {
             current = currentNode.right
         }
     }
+    
+    /*⏱️ Time & Space Complexity of Inorder tree traversal in iterative
+     Time    O(n) — every node visited once
+     Space    O(h) — height of tree (stack size)
+     Worst case (skewed tree): O(n)
+     Balanced tree: O(log n)*/
+    
     
     //9. How do you traverse a given binary tree in preorder without recursion?
     //🔴
